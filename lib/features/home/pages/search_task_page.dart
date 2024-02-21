@@ -22,7 +22,7 @@ class _SearchTaskPageState extends State<SearchTaskPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        List<Task>? listTask;;
+        List<Task>? listTask;
         if (state is HomeSearchTaskSuccess) {
           listTask = state.taskList;
         }
@@ -48,13 +48,14 @@ class _SearchTaskPageState extends State<SearchTaskPage> {
                 hintStyle: TextStyle(color: Colors.white54),
                 border: InputBorder.none,
               ),
-              onChanged: (value) {
+              onSubmitted: (value) {
                 // Perform search functionality here
+                context.read<HomeBloc>().add(HomeTaskSearched(searchedString: value));
               },
             ),
           ),
-          body: listTask == null
-              ? Image.asset('assets/images/search_no_result.jpg')
+          body: (listTask == null || listTask.isEmpty)
+              ? Center(child: Image.asset('assets/images/search_no_result.jpg', scale: 1,))
               : Container(
                   child: Column(
                     children: [

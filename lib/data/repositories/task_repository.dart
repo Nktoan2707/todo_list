@@ -42,9 +42,9 @@ class TaskRepository {
   }
 
   List<Task> searchTaskList(String searchString) {
-    List<Task> result = List<Task>.empty(growable: true);
-
-
+    List<Task> result = localList.where((task) =>
+      task.title!.toLowerCase().contains(searchString.toLowerCase()) || task.note!.toLowerCase().contains(searchString.toLowerCase())
+    ).toList();
     return result;
   }
 }
