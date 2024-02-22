@@ -39,8 +39,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeGetTaskListSuccess(taskListCategory: event.taskListCategory, taskList: taskList));
   }
 
-  FutureOr<void> _onHomeTaskCreated(HomeTaskCreated event, Emitter<HomeState> emit) {
-    Task createdTask = _taskRepository.add(event.task);
+  FutureOr<void> _onHomeTaskCreated(HomeTaskCreated event, Emitter<HomeState> emit) async {
+    Task createdTask = await _taskRepository.add(event.task);
     emit(HomeCreateTaskSuccess(createdTask: createdTask));
   }
 

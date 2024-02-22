@@ -2,18 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list/features/home/pages/search_task_page.dart';
 import 'package:todo_list/features/home/pages/task_list_page.dart';
+import 'package:todo_list/services/local_notification_service.dart';
 
 import '../../../common/constants.dart';
 import '../bloc/home_bloc.dart';
 import 'add_task_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const String pageId = "/home";
+
 
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+
+class _HomePageState extends State<HomePage> {
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+
     return BlocListener<HomeBloc, HomeState>(
       listener: (_, state) {
         if (state is HomeGetTaskListSuccess) {

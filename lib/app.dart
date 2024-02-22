@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:todo_list/router/app_router.dart';
 
 import 'features/home/pages/home_page.dart';
@@ -27,7 +28,7 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: "TODO List",
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(

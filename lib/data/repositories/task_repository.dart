@@ -1,19 +1,33 @@
 import 'package:intl/intl.dart';
 import 'package:todo_list/common/constants.dart';
 import 'package:todo_list/data/models/domain/task.dart';
+import 'package:todo_list/services/local_notification_service.dart';
 
 class TaskRepository {
   List<Task> localList = List.empty(growable: true);
+  late final LocalNotificationService localNotificationService;
 
-  Task add(Task task) {
+  TaskRepository(){
+    localNotificationService = LocalNotificationService();
+    localNotificationService.requestIOSPermissions();
+    localNotificationService.initializeNotification();
+  }
+
+  Future<Task> add(Task task) async {
     task.id = localList.length;
     localList.add(task);
 
+    DateFormat format = DateFormat("hh:mm a");
+    DateTime hourMinutes = format.parse(task.dueTime!);
+
+    localNotificationService.scheduledNotification(hourMinutes.hour, hourMinutes.minute, task);
     return localList[localList.indexOf(task)];
   }
 
   void remove(int id) {
     Task toRemoveTask = localList.firstWhere((element) => element.id == id);
+
+    localNotificationService.cancelNotification(toRemoveTask);
     localList.remove(toRemoveTask);
   }
 
@@ -46,5 +60,9 @@ class TaskRepository {
       task.title!.toLowerCase().contains(searchString.toLowerCase()) || task.note!.toLowerCase().contains(searchString.toLowerCase())
     ).toList();
     return result;
+  }
+
+  void dispose(){
+    localNotificationService.dispose();
   }
 }
