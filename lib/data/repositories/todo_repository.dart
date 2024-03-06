@@ -1,19 +1,19 @@
 import 'package:intl/intl.dart';
 import 'package:todo_list/common/constants.dart';
-import 'package:todo_list/data/models/domain/task.dart';
+import 'package:todo_list/data/models/domain/todo.dart';
 import 'package:todo_list/services/local_notification_service.dart';
 
-class TaskRepository {
-  List<Task> localList = List.empty(growable: true);
+class TodoRepository {
+  List<Todo> localList = List.empty(growable: true);
   late final LocalNotificationService localNotificationService;
 
-  TaskRepository(){
+  TodoRepository(){
     localNotificationService = LocalNotificationService();
     localNotificationService.requestIOSPermissions();
     localNotificationService.initializeNotification();
   }
 
-  Future<Task> add(Task task) async {
+  Future<Todo> add(Todo task) async {
     task.id = localList.length;
     localList.add(task);
 
@@ -25,14 +25,14 @@ class TaskRepository {
   }
 
   void remove(int id) {
-    Task toRemoveTask = localList.firstWhere((element) => element.id == id);
+    Todo toRemoveTask = localList.firstWhere((element) => element.id == id);
 
     localNotificationService.cancelNotification(toRemoveTask);
     localList.remove(toRemoveTask);
   }
 
-  List<Task> getTaskList(TaskListCategory taskListCategory) {
-    List<Task> result = List<Task>.empty(growable: true);
+  List<Todo> getTaskList(TaskListCategory taskListCategory) {
+    List<Todo> result = List<Todo>.empty(growable: true);
 
     DateTime nowTime = DateTime.now();
     DateFormat format = DateFormat("M/d/yyyy hh:mm a");
@@ -55,8 +55,8 @@ class TaskRepository {
     return result;
   }
 
-  List<Task> searchTaskList(String searchString) {
-    List<Task> result = localList.where((task) =>
+  List<Todo> searchTaskList(String searchString) {
+    List<Todo> result = localList.where((task) =>
       task.title!.toLowerCase().contains(searchString.toLowerCase()) || task.note!.toLowerCase().contains(searchString.toLowerCase())
     ).toList();
     return result;

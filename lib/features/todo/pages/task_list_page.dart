@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list/common/constants.dart';
-import 'package:todo_list/data/models/domain/task.dart';
-import 'package:todo_list/features/home/components/task_list_item_view.dart';
+import 'package:todo_list/data/models/domain/todo.dart';
+import 'package:todo_list/features/todo/components/task_list_item_view.dart';
 
-import '../bloc/home_bloc.dart';
+import '../bloc/todo_bloc.dart';
 
 class TaskListPage extends StatelessWidget {
   static const String pageId = "/task_list_page";
@@ -13,11 +13,11 @@ class TaskListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocBuilder<TodoBloc, TodoState>(
       builder: (context, state) {
-        late final List<Task> listTask;
+        late final List<Todo> listTask;
         late final String? taskListCategory;
-        if (state is HomeGetTaskListSuccess || state is HomeCompleteTaskSuccess){
+        if (state is TodoFetchSuccess || state is TodoCompleteSuccess){
           listTask = state.taskList!;
           taskListCategory = state.taskListCategory!.name[0].toUpperCase() + state.taskListCategory!.name.substring(1);
         }
@@ -26,11 +26,11 @@ class TaskListPage extends StatelessWidget {
           backgroundColor: tdBGColor,
           appBar: AppBar(
             title: ListTile(
-              leading: Icon(Icons.sunny),
+              leading: const Icon(Icons.sunny),
               title: Text(taskListCategory!),
               horizontalTitleGap: 0,
             ),
-            actions: [
+            actions: const [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Icon(Icons.more_vert),

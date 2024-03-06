@@ -1,4 +1,4 @@
-class Task {
+class Todo {
   int? id;
   String? title;
   String? note;
@@ -6,7 +6,7 @@ class Task {
   String? date;
   String? dueTime;
 
-  Task({
+  Todo({
     this.id,
     this.title,
     this.note,
@@ -26,7 +26,7 @@ class Task {
     };
   }
 
-  Task.fromJson(Map<String, dynamic> json) {
+  Todo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     note = json['note'];

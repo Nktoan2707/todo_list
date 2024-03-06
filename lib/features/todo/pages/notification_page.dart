@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../theme.dart';
 
 class NotificationPage extends StatefulWidget {
-  NotificationPage({Key? key, required this.payload}) : super(key: key);
+  const NotificationPage({super.key, required this.payload});
 
   final String payload;
 

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_list/data/repositories/task_repository.dart';
-import 'package:todo_list/features/home/pages/add_task_page.dart';
-import 'package:todo_list/features/home/pages/search_task_page.dart';
+import 'package:todo_list/data/repositories/todo_repository.dart';
+import 'package:todo_list/features/todo/bloc/todo_bloc.dart';
+import 'package:todo_list/features/todo/pages/add_task_page.dart';
+import 'package:todo_list/features/todo/pages/home_page.dart';
+import 'package:todo_list/features/todo/pages/search_task_page.dart';
+import 'package:todo_list/features/todo/pages/task_list_page.dart';
+
 
 import 'package:todo_list/widgets/loading_page.dart';
 
-import '../features/home/bloc/home_bloc.dart';
-import '../features/home/pages/home_page.dart';
-import '../features/home/pages/task_list_page.dart';
 
 class AppRouter {
-  final HomeBloc _homeBloc = HomeBloc(taskRepository: TaskRepository());
+  final TodoBloc _homeBloc = TodoBloc(taskRepository: TodoRepository());
 
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -22,7 +23,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider.value(
                   value: _homeBloc,
-                  child: TaskListPage(),
+                  child: const TaskListPage(),
                 ));
 
       case HomePage.pageId:

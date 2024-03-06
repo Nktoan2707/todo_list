@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:todo_list/features/todo/pages/home_page.dart';
 import 'package:todo_list/router/app_router.dart';
 
-import 'features/home/pages/home_page.dart';
 
 
 class App extends StatelessWidget {
@@ -10,12 +10,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppView();
+    return const AppView();
   }
 }
 
 class AppView extends StatefulWidget {
-  AppView({super.key});
+  const AppView({super.key});
 
 
   @override

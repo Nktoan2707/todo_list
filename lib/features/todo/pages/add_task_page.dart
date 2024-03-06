@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_list/common/constants.dart';
-import 'package:todo_list/features/home/bloc/home_bloc.dart';
+import 'package:todo_list/features/todo/bloc/todo_bloc.dart';
 
-import '../../../data/models/domain/task.dart';
+import '../../../data/models/domain/todo.dart';
 import '../components/button.dart';
 import '../components/input_field.dart';
 import '../theme.dart';
@@ -32,12 +32,12 @@ class _AddTaskPageState extends State<AddTaskPage> {
       // ignore: deprecated_member_use
       backgroundColor: context.theme.backgroundColor,
       appBar: AppBar(
-        title: ListTile(
+        title: const ListTile(
           leading: Icon(Icons.sunny),
           title: Text("My Day"),
           horizontalTitleGap: 0,
         ),
-        actions: [
+        actions: const [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: Icon(Icons.more_vert),
@@ -45,7 +45,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         ],
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 15),
+        margin: const EdgeInsets.only(top: 15),
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
@@ -100,7 +100,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           return;
                         }
 
-                        Task createTask = Task(
+                        Todo createTask = Todo(
                           title: _titleController.text,
                           note: _noteController.text,
                           isCompleted: 0,
@@ -109,8 +109,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
                         );
 
                         context
-                            .read<HomeBloc>()
-                            .add(HomeTaskCreated(task: createTask));
+                            .read<TodoBloc>()
+                            .add(TodoCreated(task: createTask));
                       }),
                 ],
               ),
@@ -128,8 +128,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
       return true;
     } else if (_titleController.text.isNotEmpty ||
         _noteController.text.isNotEmpty) {
-      final snackBar = SnackBar(
-        content: const Text('All fields are required!'),
+      const snackBar = SnackBar(
+        content: Text('All fields are required!'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } else {

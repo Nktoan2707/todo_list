@@ -8,9 +8,9 @@ import 'package:intl/intl.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:todo_list/features/home/pages/notification_page.dart';
+import 'package:todo_list/features/todo/pages/notification_page.dart';
 
-import '../data/models/domain/task.dart';
+import '../data/models/domain/todo.dart';
 
 class LocalNotificationService {
   LocalNotificationService();
@@ -79,7 +79,7 @@ class LocalNotificationService {
     );
   }
 
-  cancelNotification(Task task) async {
+  cancelNotification(Todo task) async {
     await flutterLocalNotificationsPlugin.cancel(task.id!);
     print('Notification is canceled');
   }
@@ -89,7 +89,7 @@ class LocalNotificationService {
     print('All notifications are canceled');
   }
 
-  scheduledNotification(int hour, int minutes, Task task) async {
+  scheduledNotification(int hour, int minutes, Todo task) async {
     tz.TZDateTime taskRemindTZDateTime = _getTaskRemindTZDateTime(
         hour, minutes, task.date!);
     taskRemindTZDateTime =

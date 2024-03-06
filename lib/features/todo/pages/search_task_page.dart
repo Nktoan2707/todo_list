@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list/common/constants.dart';
-import 'package:todo_list/data/models/domain/task.dart';
-import 'package:todo_list/features/home/components/task_list_item_view.dart';
+import 'package:todo_list/data/models/domain/todo.dart';
 
-import '../bloc/home_bloc.dart';
+import '../bloc/todo_bloc.dart';
+import '../components/task_list_item_view.dart';
 
 class SearchTaskPage extends StatefulWidget {
   static const String pageId = "/search_task_page";
@@ -20,10 +20,10 @@ class _SearchTaskPageState extends State<SearchTaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocBuilder<TodoBloc, TodoState>(
       builder: (context, state) {
-        List<Task>? listTask;
-        if (state is HomeSearchTaskSuccess) {
+        List<Todo>? listTask;
+        if (state is TodoSearchSuccess) {
           listTask = state.taskList;
         }
 
@@ -50,7 +50,7 @@ class _SearchTaskPageState extends State<SearchTaskPage> {
               ),
               onSubmitted: (value) {
                 // Perform search functionality here
-                context.read<HomeBloc>().add(HomeTaskSearched(searchedString: value));
+                context.read<TodoBloc>().add(TodoSearched(searchedString: value));
               },
             ),
           ),

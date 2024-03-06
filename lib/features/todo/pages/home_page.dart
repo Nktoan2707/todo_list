@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_list/features/home/pages/search_task_page.dart';
-import 'package:todo_list/features/home/pages/task_list_page.dart';
-import 'package:todo_list/services/local_notification_service.dart';
+import 'package:todo_list/features/todo/pages/search_task_page.dart';
+import 'package:todo_list/features/todo/pages/task_list_page.dart';
+
 
 import '../../../common/constants.dart';
-import '../bloc/home_bloc.dart';
+import '../bloc/todo_bloc.dart';
 import 'add_task_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,9 +31,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
 
-    return BlocListener<HomeBloc, HomeState>(
+    return BlocListener<TodoBloc, TodoState>(
       listener: (_, state) {
-        if (state is HomeGetTaskListSuccess) {
+        if (state is TodoFetchSuccess) {
           Navigator.of(context).pushNamed(TaskListPage.pageId);
         }
       },
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           centerTitle: false,
           actions: [
             GestureDetector(
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Icon(Icons.search),
               ),
@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             Navigator.of(context).pushNamed(AddTaskPage.pageId);
           },
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
         body: Container(
           child: Column(
@@ -71,32 +71,32 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       child: ListTile(
                         onTap: () {
-                          context.read<HomeBloc>().add(const HomeTaskListFetched(taskListCategory:  TaskListCategory.today));
+                          context.read<TodoBloc>().add(const TodoListFetched(taskListCategory:  TaskListCategory.today));
                         },
                         tileColor: Colors.white,
-                        leading: Icon(Icons.sunny),
-                        title: Text("Today"),
+                        leading: const Icon(Icons.sunny),
+                        title: const Text("Today"),
                       ),
                     ),
                     Container(
                       child: ListTile(
                         onTap: () {
-                          context.read<HomeBloc>().add(const HomeTaskListFetched(taskListCategory:  TaskListCategory.upcoming));
+                          context.read<TodoBloc>().add(const TodoListFetched(taskListCategory:  TaskListCategory.upcoming));
 
                         },
                         tileColor: Colors.white,
-                        leading: Icon(Icons.calendar_month_outlined),
-                        title: Text("Upcoming"),
+                        leading: const Icon(Icons.calendar_month_outlined),
+                        title: const Text("Upcoming"),
                       ),
                     ),
                     Container(
                       child: ListTile(
                         onTap: () {
-                          context.read<HomeBloc>().add(const HomeTaskListFetched(taskListCategory:  TaskListCategory.all));
+                          context.read<TodoBloc>().add(const TodoListFetched(taskListCategory:  TaskListCategory.all));
                         },
                         tileColor: Colors.white,
-                        leading: Icon(Icons.task),
-                        title: Text("All"),
+                        leading: const Icon(Icons.task),
+                        title: const Text("All"),
                       ),
                     ),
                     const Divider(
